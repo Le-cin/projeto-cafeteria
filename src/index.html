@@ -1,0 +1,1941 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grão — atendimento da cafeteria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f3f1ec;
+        --surface: #ffffff;
+        --surface-2: #faf8f4;
+        --ink: #2a2521;
+        --ink-soft: #6f665e;
+        --line: #e6e1d8;
+        --accent: #a9611a;
+        --accent-ink: #ffffff;
+        --accent-soft: #f3e7d6;
+        --green: #3f6b4c;
+        --green-soft: #e4eee6;
+        --danger: #b4442e;
+        --danger-soft: #f6e3dd;
+        --blue: #3a5c8a;
+        --blue-soft: #e3eaf3;
+        --shadow: 0 1px 2px rgba(42, 37, 33, 0.06), 0 6px 20px rgba(42, 37, 33, 0.05);
+        --r: 14px;
+        --r-sm: 10px;
+        --sans: "Inter", system-ui, sans-serif;
+        --disp: "Bricolage Grotesque", var(--sans);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #1b1815;
+          --surface: #262220;
+          --surface-2: #2e2925;
+          --ink: #f2ede6;
+          --ink-soft: #a79d93;
+          --line: #38322d;
+          --accent: #d28a40;
+          --accent-ink: #211406;
+          --accent-soft: #382a1b;
+          --green: #74ac85;
+          --green-soft: #26332b;
+          --danger: #e1765e;
+          --danger-soft: #3a231d;
+          --blue: #7c9bc7;
+          --blue-soft: #232c39;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #1b1815;
+        --surface: #262220;
+        --surface-2: #2e2925;
+        --ink: #f2ede6;
+        --ink-soft: #a79d93;
+        --line: #38322d;
+        --accent: #d28a40;
+        --accent-ink: #211406;
+        --accent-soft: #382a1b;
+        --green: #74ac85;
+        --green-soft: #26332b;
+        --danger: #e1765e;
+        --danger-soft: #3a231d;
+        --blue: #7c9bc7;
+        --blue-soft: #232c39;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: inherit;
+      }
+      input,
+      select {
+        font-family: inherit;
+        font-size: 15px;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 236px 1fr;
+        min-height: 100vh;
+      }
+      .side {
+        background: var(--surface);
+        border-right: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        padding: 22px 16px;
+        gap: 6px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 8px 18px;
+      }
+      .brand .mark {
+        font-size: 26px;
+        line-height: 1;
+      }
+      .brand h1 {
+        font-family: var(--disp);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .brand span {
+        display: block;
+        font-size: 11.5px;
+        color: var(--ink-soft);
+        font-weight: 500;
+        margin-top: -2px;
+      }
+      .nav {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .nav button {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: var(--r-sm);
+        color: var(--ink-soft);
+        font-weight: 500;
+        font-size: 14.5px;
+        transition:
+          background 0.12s,
+          color 0.12s;
+      }
+      .nav button .ic {
+        width: 20px;
+        text-align: center;
+        font-size: 16px;
+      }
+      .nav button:hover {
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+      .nav button.on {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .side-foot {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 12px;
+      }
+      .ghost {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+        padding: 9px;
+        border-radius: var(--r-sm);
+        border: 1px solid var(--line);
+        color: var(--ink-soft);
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.12s;
+      }
+      .ghost:hover {
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+      .main {
+        padding: 26px 30px 90px;
+        max-width: 1120px;
+        width: 100%;
+      }
+      .head {
+        margin-bottom: 22px;
+      }
+      .head h2 {
+        font-family: var(--disp);
+        font-size: 27px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .head p {
+        color: var(--ink-soft);
+        font-size: 14px;
+        margin-top: 2px;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        box-shadow: var(--shadow);
+      }
+      .card-h {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .card-h h3 {
+        font-family: var(--disp);
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .muted {
+        color: var(--ink-soft);
+      }
+
+      /* Stepper track (espelha o fluxograma) */
+      .track {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .track .st {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        opacity: 0.5;
+      }
+      .track .st.on {
+        opacity: 1;
+      }
+      .track .st.done {
+        opacity: 1;
+      }
+      .track .dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 99px;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--disp);
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--ink-soft);
+        flex: none;
+      }
+      .track .st.on .dot {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-ink);
+      }
+      .track .st.done .dot {
+        background: var(--green);
+        border-color: var(--green);
+        color: #fff;
+      }
+      .track .lb {
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .track .sep {
+        width: 26px;
+        height: 2px;
+        background: var(--line);
+        margin: 0 8px;
+        flex: none;
+      }
+      @media (max-width: 720px) {
+        .track .lb {
+          display: none;
+        }
+        .track .sep {
+          width: 14px;
+          margin: 0 4px;
+        }
+      }
+
+      .wiz {
+        max-width: 760px;
+      }
+      .wiz .q {
+        font-family: var(--disp);
+        font-size: 21px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .wiz .qs {
+        color: var(--ink-soft);
+        font-size: 13.5px;
+        margin-bottom: 18px;
+      }
+      .step-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 22px;
+        align-items: center;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 20px;
+        border-radius: var(--r-sm);
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-weight: 600;
+        font-size: 15px;
+        transition:
+          filter 0.12s,
+          opacity 0.12s;
+      }
+      .btn:hover:not(:disabled) {
+        filter: brightness(1.06);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn.line {
+        background: var(--surface);
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+      .btn.line:hover:not(:disabled) {
+        background: var(--surface-2);
+        filter: none;
+      }
+      .btn.sm {
+        padding: 9px 15px;
+        font-size: 13.5px;
+      }
+      .btn.block {
+        width: 100%;
+      }
+      .linklike {
+        background: none;
+        color: var(--ink-soft);
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .linklike:hover {
+        color: var(--ink);
+      }
+
+      /* Canal */
+      .canal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .canal {
+        text-align: left;
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        border-radius: var(--r);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        transition:
+          border-color 0.12s,
+          transform 0.1s,
+          box-shadow 0.12s;
+      }
+      .canal:hover {
+        border-color: var(--accent);
+        box-shadow: var(--shadow);
+      }
+      .canal:active {
+        transform: scale(0.99);
+      }
+      .canal .em {
+        font-size: 34px;
+      }
+      .canal .t {
+        font-family: var(--disp);
+        font-size: 19px;
+        font-weight: 700;
+      }
+      .canal .d {
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+      @media (max-width: 560px) {
+        .canal-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Cliente search */
+      .search {
+        position: relative;
+        margin-bottom: 8px;
+      }
+      .search input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: var(--r-sm);
+        border: 1px solid var(--line);
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+      .search input:focus {
+        outline: 2px solid var(--accent);
+        border-color: transparent;
+      }
+      .results {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 12px 0;
+      }
+      .cli-r {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        text-align: left;
+        transition:
+          border-color 0.12s,
+          background 0.12s;
+      }
+      .cli-r:hover {
+        border-color: var(--accent);
+        background: var(--surface-2);
+      }
+      .cli-r.sel {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+      .av {
+        width: 38px;
+        height: 38px;
+        border-radius: 99px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--disp);
+        font-weight: 700;
+        font-size: 15px;
+        flex: none;
+      }
+      .cli-r .nm {
+        font-weight: 600;
+        flex: 1;
+      }
+      .cli-r .nm small {
+        display: block;
+        color: var(--ink-soft);
+        font-weight: 400;
+        font-size: 12px;
+      }
+      .cli-r .pts {
+        font-family: var(--disp);
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .cli-r .pts small {
+        display: block;
+        font-family: var(--sans);
+        font-weight: 400;
+        font-size: 11px;
+        color: var(--ink-soft);
+        text-align: right;
+      }
+
+      /* Itens / comanda */
+      .cols-i {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 20px;
+        align-items: start;
+      }
+      .cat-tabs {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .chip {
+        padding: 7px 13px;
+        border-radius: 99px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        transition: 0.12s;
+      }
+      .chip:hover {
+        border-color: var(--accent);
+      }
+      .chip.on {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-ink);
+        font-weight: 600;
+      }
+      .menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 11px;
+      }
+      .prod {
+        text-align: left;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        padding: 13px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-height: 100px;
+        transition:
+          transform 0.1s,
+          border-color 0.12s,
+          box-shadow 0.12s;
+      }
+      .prod:hover:not(.out) {
+        border-color: var(--accent);
+        box-shadow: var(--shadow);
+      }
+      .prod:active:not(.out) {
+        transform: scale(0.98);
+      }
+      .prod .nome {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.25;
+      }
+      .prod .preco {
+        font-family: var(--disp);
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: auto;
+        color: var(--accent);
+      }
+      .prod .est {
+        font-size: 11px;
+        color: var(--ink-soft);
+      }
+      .prod .est.low {
+        color: var(--danger);
+        font-weight: 600;
+      }
+      .prod.out {
+        background: var(--surface-2);
+      }
+      .prod.out .nome,
+      .prod.out .preco {
+        opacity: 0.55;
+      }
+      .sug {
+        margin-top: 6px;
+        font-size: 11.5px;
+        font-weight: 600;
+        color: var(--blue);
+        background: var(--blue-soft);
+        border-radius: 8px;
+        padding: 6px 8px;
+        text-align: center;
+      }
+      .sug:hover {
+        filter: brightness(0.97);
+      }
+
+      .comanda {
+        position: sticky;
+        top: 26px;
+      }
+      .comanda .list {
+        padding: 6px 0;
+        max-height: 40vh;
+        overflow: auto;
+      }
+      .empty {
+        padding: 26px 16px;
+        text-align: center;
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+      .li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+      }
+      .li .qn {
+        font-weight: 600;
+        flex: 1;
+        font-size: 14px;
+      }
+      .li .qn small {
+        display: block;
+        color: var(--ink-soft);
+        font-weight: 400;
+        font-size: 12px;
+      }
+      .stepp {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        background: var(--surface-2);
+        border-radius: 99px;
+        padding: 2px;
+      }
+      .stepp button {
+        width: 24px;
+        height: 24px;
+        border-radius: 99px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .stepp button:hover {
+        background: var(--surface);
+        color: var(--ink);
+      }
+      .stepp span {
+        min-width: 20px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .li .lp {
+        font-family: var(--disp);
+        font-weight: 600;
+        min-width: 58px;
+        text-align: right;
+        font-size: 14px;
+      }
+      .foot {
+        border-top: 1px solid var(--line);
+        padding: 14px 16px;
+      }
+      .tot {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .tot .v {
+        font-family: var(--disp);
+        font-size: 23px;
+        font-weight: 700;
+      }
+
+      /* Fidelidade step */
+      .fid {
+        padding: 20px;
+        border-radius: var(--r);
+        border: 1px solid var(--line);
+      }
+      .fid.in {
+        background: var(--green-soft);
+        border-color: transparent;
+      }
+      .fid.no {
+        background: var(--surface-2);
+      }
+      .fid .lead {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .fid .lead .big {
+        font-family: var(--disp);
+        font-size: 19px;
+        font-weight: 700;
+      }
+      .fid .grid {
+        display: flex;
+        gap: 26px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+      .fid .grid div {
+        font-size: 12.5px;
+        color: var(--ink-soft);
+      }
+      .fid .grid b {
+        display: block;
+        font-family: var(--disp);
+        font-size: 22px;
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .bar {
+        height: 8px;
+        border-radius: 99px;
+        background: rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin: 10px 0;
+      }
+      .bar > i {
+        display: block;
+        height: 100%;
+        background: var(--green);
+        border-radius: 99px;
+      }
+      .reward {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: var(--surface);
+        border: 1px dashed var(--accent);
+        border-radius: var(--r-sm);
+        padding: 12px 14px;
+        margin-top: 12px;
+      }
+      .reward.done {
+        border-style: solid;
+        border-color: var(--green);
+        background: var(--green-soft);
+      }
+
+      /* Resumo / sucesso */
+      .resumo {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .rline {
+        display: flex;
+        justify-content: space-between;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+      .rline:last-child {
+        border-bottom: none;
+      }
+      .rline.tt {
+        font-family: var(--disp);
+        font-size: 20px;
+        font-weight: 700;
+        padding-top: 14px;
+      }
+      .badge-ch {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 99px;
+        font-size: 12.5px;
+        font-weight: 600;
+      }
+      .badge-ch.loja {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .badge-ch.site {
+        background: var(--blue-soft);
+        color: var(--blue);
+      }
+      .success {
+        text-align: center;
+        padding: 20px;
+      }
+      .success .ok {
+        width: 66px;
+        height: 66px;
+        border-radius: 99px;
+        background: var(--green);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        margin: 0 auto 14px;
+      }
+      .success h2 {
+        font-family: var(--disp);
+        font-size: 26px;
+        font-weight: 700;
+      }
+
+      /* KPIs / tables / clientes (painéis de apoio) */
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      .kpi {
+        padding: 18px;
+      }
+      .kpi .lab {
+        font-size: 12.5px;
+        color: var(--ink-soft);
+        font-weight: 500;
+      }
+      .kpi .big {
+        font-family: var(--disp);
+        font-size: 29px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-top: 6px;
+        line-height: 1;
+      }
+      .kpi .sub {
+        font-size: 12px;
+        color: var(--ink-soft);
+        margin-top: 6px;
+      }
+      .cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .rank {
+        display: flex;
+        flex-direction: column;
+      }
+      .rank .item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+      .rank .item:last-child {
+        border-bottom: none;
+      }
+      .pos {
+        width: 24px;
+        height: 24px;
+        border-radius: 99px;
+        background: var(--surface-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 12.5px;
+        color: var(--ink-soft);
+        font-family: var(--disp);
+        flex: none;
+      }
+      .rank .item:first-child .pos {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .rank .nm {
+        flex: 1;
+        font-weight: 500;
+      }
+      .rank .mt {
+        font-family: var(--disp);
+        font-weight: 600;
+      }
+      .split {
+        display: flex;
+        gap: 10px;
+        margin-top: 8px;
+      }
+      .split .seg {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        border-radius: var(--r-sm);
+        background: var(--surface-2);
+      }
+      .split .seg b {
+        display: block;
+        font-family: var(--disp);
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .tbl {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .tbl th {
+        text-align: left;
+        font-size: 12px;
+        color: var(--ink-soft);
+        font-weight: 600;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .tbl td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+      }
+      .tbl tr:last-child td {
+        border-bottom: none;
+      }
+      .tbl .r {
+        text-align: right;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 9px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .tag.ok {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+      .tag.low {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+      .pill-btn {
+        padding: 6px 11px;
+        border-radius: 99px;
+        border: 1px solid var(--line);
+        font-size: 13px;
+        font-weight: 500;
+        background: var(--surface);
+      }
+      .pill-btn:hover {
+        background: var(--surface-2);
+      }
+      .clients {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 14px;
+      }
+      .cli {
+        padding: 16px;
+      }
+      .cli .top {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin-bottom: 12px;
+      }
+      .cli .nm2 {
+        font-weight: 600;
+      }
+      .cli .ph {
+        font-size: 12.5px;
+        color: var(--ink-soft);
+      }
+      .cli .stats {
+        display: flex;
+        gap: 18px;
+        margin: 10px 0;
+      }
+      .cli .stats div {
+        font-size: 12px;
+        color: var(--ink-soft);
+      }
+      .cli .stats b {
+        display: block;
+        font-family: var(--disp);
+        font-size: 19px;
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .cli .rw {
+        font-size: 12px;
+        color: var(--ink-soft);
+        margin-top: 8px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .tbl-wrap {
+        overflow-x: auto;
+      }
+
+      .field {
+        margin-bottom: 12px;
+      }
+      .field label {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--ink-soft);
+      }
+      .field input,
+      .field select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: var(--r-sm);
+        border: 1px solid var(--line);
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+      .field input:focus,
+      .field select:focus {
+        outline: 2px solid var(--accent);
+        border-color: transparent;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 16, 12, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 50;
+      }
+      .modal {
+        background: var(--surface);
+        border-radius: var(--r);
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+      .modal .body {
+        padding: 18px;
+      }
+      .modal .acts {
+        display: flex;
+        gap: 10px;
+        padding: 0 18px 18px;
+      }
+      #toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+        pointer-events: none;
+        background: var(--ink);
+        color: var(--bg);
+        padding: 13px 20px;
+        border-radius: 99px;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        transition: 0.25s;
+        z-index: 60;
+      }
+      #toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .mobtop {
+        display: none;
+      }
+      .botnav {
+        display: none;
+      }
+      @media (max-width: 860px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .side {
+          display: none;
+        }
+        .mobtop {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 18px;
+          background: var(--surface);
+          border-bottom: 1px solid var(--line);
+          position: sticky;
+          top: 0;
+          z-index: 40;
+        }
+        .mobtop .brand {
+          padding: 0;
+        }
+        .main {
+          padding: 18px 16px 96px;
+        }
+        .cols-i {
+          grid-template-columns: 1fr;
+        }
+        .comanda {
+          position: static;
+        }
+        .cols {
+          grid-template-columns: 1fr;
+        }
+        .botnav {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: var(--surface);
+          border-top: 1px solid var(--line);
+          z-index: 40;
+        }
+        .botnav button {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 3px;
+          padding: 9px 4px;
+          color: var(--ink-soft);
+          font-size: 11px;
+          font-weight: 500;
+        }
+        .botnav button .ic {
+          font-size: 19px;
+        }
+        .botnav button.on {
+          color: var(--accent);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="side">
+        <div class="brand">
+          <span class="mark">☕</span>
+          <div>
+            <h1>Grão</h1>
+            <span>Gestão de cafeteria</span>
+          </div>
+        </div>
+        <nav class="nav" id="nav">
+          <button data-view="atend" class="on"><span class="ic">🧾</span> Atendimento</button>
+          <button data-view="estoque"><span class="ic">📦</span> Estoque</button>
+          <button data-view="clientes"><span class="ic">🎯</span> Fidelidade</button>
+          <button data-view="indicadores"><span class="ic">📊</span> Indicadores</button>
+        </nav>
+        <div class="side-foot">
+          <button class="ghost" id="themeBtn">
+            <span id="themeIc">🌙</span> <span id="themeLb">Tema escuro</span>
+          </button>
+          <button class="ghost" id="resetBtn">↺ Reiniciar dados</button>
+        </div>
+      </aside>
+      <div class="mobtop">
+        <div class="brand">
+          <span class="mark">☕</span>
+          <div><h1 style="font-size: 19px">Grão</h1></div>
+        </div>
+        <button class="ghost" id="themeBtn2" style="padding: 7px 10px"><span id="themeIc2">🌙</span></button>
+      </div>
+      <main class="main" id="main"></main>
+    </div>
+    <nav class="botnav" id="botnav">
+      <button data-view="atend" class="on"><span class="ic">🧾</span> Atender</button>
+      <button data-view="estoque"><span class="ic">📦</span> Estoque</button>
+      <button data-view="clientes"><span class="ic">🎯</span> Clientes</button>
+      <button data-view="indicadores"><span class="ic">📊</span> Painel</button>
+    </nav>
+    <div id="modal-root"></div>
+    <div id="toast"></div>
+
+    <script>
+      "use strict";
+      const KEY = "grao_cafe_flux_v1";
+      const PONTOS_BRINDE = 100; // pontos para um brinde
+      const VALOR_BRINDE = 6.0; // desconto do brinde (Espresso cortesia)
+      const money = (n) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      const uid = () => Math.random().toString(36).slice(2, 9);
+      const $ = (s) => document.querySelector(s);
+
+      /* ---------- Estado persistente ---------- */
+      let state = load();
+
+      function seed() {
+        const produtos = [
+          { id: uid(), nome: "Espresso", cat: "Café", preco: 6.0, estoque: 80, min: 15, vendidos: 0 },
+          { id: uid(), nome: "Café coado", cat: "Café", preco: 5.0, estoque: 90, min: 15, vendidos: 0 },
+          { id: uid(), nome: "Cappuccino", cat: "Café", preco: 9.5, estoque: 60, min: 12, vendidos: 0 },
+          { id: uid(), nome: "Latte", cat: "Café", preco: 10.0, estoque: 0, min: 12, vendidos: 0 },
+          { id: uid(), nome: "Mocha", cat: "Café", preco: 12.0, estoque: 40, min: 10, vendidos: 0 },
+          { id: uid(), nome: "Chá gelado", cat: "Bebidas", preco: 8.0, estoque: 35, min: 8, vendidos: 0 },
+          { id: uid(), nome: "Suco natural", cat: "Bebidas", preco: 11.0, estoque: 30, min: 8, vendidos: 0 },
+          { id: uid(), nome: "Pão de queijo", cat: "Comidas", preco: 6.5, estoque: 70, min: 15, vendidos: 0 },
+          { id: uid(), nome: "Croissant", cat: "Comidas", preco: 8.0, estoque: 28, min: 10, vendidos: 0 },
+          {
+            id: uid(),
+            nome: "Bolo de cenoura",
+            cat: "Comidas",
+            preco: 9.0,
+            estoque: 24,
+            min: 8,
+            vendidos: 0,
+          },
+          { id: uid(), nome: "Cookie", cat: "Comidas", preco: 7.0, estoque: 50, min: 12, vendidos: 0 },
+        ];
+        const clientes = [
+          { id: uid(), nome: "Ana Souza", tel: "(11) 98812-0034", pontos: 0, visitas: 0, gasto: 0 },
+          { id: uid(), nome: "Bruno Lima", tel: "(11) 99123-8890", pontos: 0, visitas: 0, gasto: 0 },
+          { id: uid(), nome: "Carla Dias", tel: "(11) 99677-1220", pontos: 0, visitas: 0, gasto: 0 },
+          { id: uid(), nome: "Diego Alves", tel: "(11) 98004-4571", pontos: 0, visitas: 0, gasto: 0 },
+          { id: uid(), nome: "Elena Rocha", tel: "(11) 99540-0083", pontos: 0, visitas: 0, gasto: 0 },
+        ];
+        const st = { produtos, clientes, pedidos: [] };
+        const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+        for (let d = 7; d >= 0; d--) {
+          const nped = rnd(2, 5);
+          for (let k = 0; k < nped; k++) {
+            const cli = Math.random() < 0.7 ? clientes[rnd(0, clientes.length - 1)].id : null;
+            const itens = [];
+            const nItens = rnd(1, 3);
+            for (let i = 0; i < nItens; i++) {
+              const disp = produtos.filter((p) => p.estoque > 0);
+              const p = disp[rnd(0, disp.length - 1)];
+              const ex = itens.find((x) => x.produtoId === p.id);
+              if (ex) ex.qtd++;
+              else itens.push({ produtoId: p.id, nome: p.nome, preco: p.preco, qtd: rnd(1, 2) });
+            }
+            const data = new Date();
+            data.setDate(data.getDate() - d);
+            data.setHours(rnd(8, 19), rnd(0, 59));
+            aplicarPedido(st, cli, itens, { dataISO: data.toISOString(), canal: "loja" });
+          }
+        }
+        return st;
+      }
+      function load() {
+        try {
+          const r = localStorage.getItem(KEY);
+          if (r) return JSON.parse(r);
+        } catch (e) {}
+        const st = seed();
+        persist(st);
+        return st;
+      }
+      function persist(st) {
+        try {
+          localStorage.setItem(KEY, JSON.stringify(st || state));
+        } catch (e) {}
+      }
+
+      function aplicarPedido(st, clienteId, itens, opts = {}) {
+        const { desconto = 0, pontosGastos = 0, canal = "loja", dataISO = null } = opts;
+        let subtotal = 0;
+        itens.forEach((it) => {
+          const p = st.produtos.find((x) => x.id === it.produtoId);
+          if (p) {
+            p.estoque = Math.max(0, p.estoque - it.qtd);
+            p.vendidos += it.qtd;
+          }
+          subtotal += it.preco * it.qtd;
+        });
+        const total = Math.max(0, subtotal - desconto);
+        const pontos = Math.floor(total);
+        if (clienteId) {
+          const c = st.clientes.find((x) => x.id === clienteId);
+          if (c) {
+            c.pontos = Math.max(0, c.pontos + pontos - pontosGastos);
+            c.visitas += 1;
+            c.gasto += total;
+          }
+        }
+        st.pedidos.push({
+          id: uid(),
+          data: dataISO || new Date().toISOString(),
+          clienteId,
+          itens,
+          subtotal,
+          desconto,
+          total,
+          pontos,
+          canal,
+        });
+        return { total, pontos };
+      }
+
+      /* ---------- Estado do atendimento (efêmero) ---------- */
+      let A = novoAtend();
+      function novoAtend() {
+        return {
+          step: 0,
+          canal: "loja",
+          clienteId: null,
+          avulso: false,
+          cart: [],
+          resgatar: false,
+          concluido: null,
+        };
+      }
+
+      /* ---------- Router ---------- */
+      let view = "atend";
+      function go(v) {
+        view = v;
+        document
+          .querySelectorAll("#nav button,#botnav button")
+          .forEach((b) => b.classList.toggle("on", b.dataset.view === v));
+        render();
+        window.scrollTo(0, 0);
+      }
+      document
+        .querySelectorAll("#nav button,#botnav button")
+        .forEach((b) => (b.onclick = () => go(b.dataset.view)));
+
+      function render() {
+        const m = $("#main");
+        if (view === "atend") m.innerHTML = viewAtend();
+        else if (view === "estoque") m.innerHTML = viewEstoque();
+        else if (view === "clientes") m.innerHTML = viewClientes();
+        else m.innerHTML = viewIndicadores();
+        wire();
+      }
+
+      /* ================= ATENDIMENTO (segue o fluxograma) ================= */
+      const STEPS = ["Cliente", "Itens", "Fidelidade", "Finalizar"];
+      function trackHTML() {
+        if (A.concluido) return "";
+        let h = '<div class="track">';
+        STEPS.forEach((s, i) => {
+          const cls = i < A.step ? "done" : i === A.step ? "on" : "";
+          h += `<div class="st ${cls}"><span class="dot">${i < A.step ? "✓" : i + 1}</span><span class="lb">${s}</span></div>`;
+          if (i < STEPS.length - 1) h += '<span class="sep"></span>';
+        });
+        return h + "</div>";
+      }
+      function viewAtend() {
+        if (A.concluido) return stepSucesso();
+        let body = "";
+        if (A.step === 0) body = stepCliente();
+        else if (A.step === 1) body = stepItens();
+        else if (A.step === 2) body = stepFidelidade();
+        else body = stepFinalizar();
+        return `<div class="head"><h2>Atendimento</h2><p>Fluxo de atendimento na loja — cada etapa segue o fluxograma do projeto.</p></div>
+    ${trackHTML()}<div class="wiz">${body}</div>`;
+      }
+
+      /* Etapa 1 — Tem cadastro? / Cadastrar cliente */
+      function stepCliente() {
+        const q = (window._cliQ || "").toLowerCase();
+        const lista = state.clientes
+          .slice()
+          .sort((a, b) => a.nome.localeCompare(b.nome))
+          .filter((c) => !q || c.nome.toLowerCase().includes(q) || (c.tel || "").includes(q));
+        const results = lista.length
+          ? lista
+              .map(
+                (c) => `
+    <button class="cli-r ${c.id === A.clienteId ? "sel" : ""}" data-cli="${c.id}">
+      <span class="av">${inic(c.nome)}</span>
+      <span class="nm">${c.nome}<small>${c.tel || "—"}</small></span>
+      <span class="pts">${c.pontos}<small>pontos</small></span>
+    </button>`,
+              )
+              .join("")
+          : `<div class="empty">Nenhum cliente encontrado. Cadastre um novo.</div>`;
+        return `<div class="q">O cliente tem cadastro?</div>
+    <div class="qs">Busque pelo nome ou telefone. Se não tiver, cadastre — como no fluxograma.</div>
+    <div class="search"><input id="cliQ" placeholder="Buscar cliente..." value="${window._cliQ || ""}"></div>
+    <div class="results">${results}</div>
+    <button class="btn line sm" id="novoCli">+ Cadastrar cliente</button>
+    <div class="step-actions">
+      <button class="btn" data-next ${A.clienteId ? "" : "disabled"}>Continuar</button>
+      <button class="linklike" id="avulso">Seguir sem cadastro (venda avulsa)</button>
+    </div>`;
+      }
+      /* Etapa 2 — Sistema indica itens / Verificar estoque / Tem estoque? / Sugerir outro / Indicar produto */
+      function stepItens() {
+        const cats = ["Tudo", ...new Set(state.produtos.map((p) => p.cat))];
+        const cf = window._catF || "Tudo";
+        const tabs = cats
+          .map((c) => `<button class="chip ${c === cf ? "on" : ""}" data-cat="${c}">${c}</button>`)
+          .join("");
+        const prods = state.produtos.filter((p) => cf === "Tudo" || p.cat === cf);
+        const menu = prods
+          .map((p) => {
+            const emCarrinho = (A.cart.find((x) => x.produtoId === p.id) || {}).qtd || 0;
+            const rest = p.estoque - emCarrinho;
+            const out = p.estoque <= 0;
+            const low = p.estoque <= p.min;
+            if (out) {
+              const alt = state.produtos.find((x) => x.cat === p.cat && x.estoque > 0 && x.id !== p.id);
+              return `<div class="prod out">
+        <span class="nome">${p.nome}</span>
+        <span class="est low">Sem estoque</span>
+        <span class="preco">${money(p.preco)}</span>
+        ${alt ? `<button class="sug" data-sug="${alt.id}">Sugerir: ${alt.nome}</button>` : ""}
+      </div>`;
+            }
+            return `<button class="prod" data-add="${p.id}">
+      <span class="nome">${p.nome}</span>
+      <span class="est ${low ? "low" : ""}">${rest} em estoque</span>
+      <span class="preco">${money(p.preco)}</span>
+    </button>`;
+          })
+          .join("");
+        const linhas = A.cart.length
+          ? A.cart
+              .map(
+                (it) => `
+    <div class="li"><div class="qn">${it.nome}<small>${money(it.preco)}</small></div>
+      <div class="stepp"><button data-dec="${it.produtoId}">−</button><span>${it.qtd}</span><button data-inc="${it.produtoId}">+</button></div>
+      <div class="lp">${money(it.preco * it.qtd)}</div></div>`,
+              )
+              .join("")
+          : `<div class="empty">Toque num produto para adicionar.</div>`;
+        const total = cartTotal();
+        return `<div class="q">Montar o pedido</div>
+    <div class="qs">O sistema mostra os itens com estoque. Sem estoque, ele sugere um similar — como o fluxograma prevê.</div>
+    <div class="cols-i">
+      <div><div class="cat-tabs">${tabs}</div><div class="menu">${menu}</div></div>
+      <div class="card comanda">
+        <div class="card-h"><h3>Pedido</h3>${A.cart.length ? `<button class="pill-btn" id="limpar">Limpar</button>` : ""}</div>
+        <div class="list">${linhas}</div>
+        <div class="foot"><div class="tot"><span class="muted">Total</span><span class="v">${money(total)}</span></div></div>
+      </div>
+    </div>
+    <div class="step-actions">
+      <button class="btn line" data-back>Voltar</button>
+      <button class="btn" data-next ${A.cart.length ? "" : "disabled"}>Continuar</button>
+    </div>`;
+      }
+      /* Etapa 3 — Verificar fidelidade / Atribuir condições */
+      function stepFidelidade() {
+        const c = A.clienteId ? state.clientes.find((x) => x.id === A.clienteId) : null;
+        const total = cartTotal();
+        let body;
+        if (c) {
+          const ganho = Math.floor(Math.max(0, total - (A.resgatar ? VALOR_BRINDE : 0)));
+          const prog = Math.min(100, Math.round(((c.pontos % PONTOS_BRINDE) / PONTOS_BRINDE) * 100));
+          const podeResgatar = c.pontos >= PONTOS_BRINDE;
+          body = `<div class="fid in">
+      <div class="lead"><span class="av">${inic(c.nome)}</span><div><div class="big">${c.nome}</div><div class="muted" style="font-size:13px">Participa do programa de fidelidade</div></div></div>
+      <div class="grid">
+        <div><b>${c.pontos}</b> pontos hoje</div>
+        <div><b>+${ganho}</b> a creditar</div>
+        <div><b>${c.visitas}</b> visitas</div>
+      </div>
+      <div class="bar"><i style="width:${prog}%"></i></div>
+      <div class="reward ${A.resgatar ? "done" : ""}">
+        <div><b style="font-family:var(--disp)">🎁 Espresso cortesia</b><div class="muted" style="font-size:12.5px">Troque ${PONTOS_BRINDE} pontos por ${money(VALOR_BRINDE)} de desconto</div></div>
+        ${
+          podeResgatar
+            ? `<button class="btn sm ${A.resgatar ? "line" : ""}" id="resg">${A.resgatar ? "Resgatado ✓" : "Resgatar"}</button>`
+            : `<span class="muted" style="font-size:12.5px">faltam ${PONTOS_BRINDE - (c.pontos % PONTOS_BRINDE)} pts</span>`
+        }
+      </div>
+    </div>`;
+        } else {
+          body = `<div class="fid no">
+      <div class="lead"><span class="av" style="background:var(--surface);color:var(--ink-soft)">?</span><div><div class="big">Venda avulsa</div><div class="muted" style="font-size:13px">Sem cliente identificado — não acumula pontos</div></div></div>
+      <button class="btn line sm" id="cadAgora">Cadastrar cliente agora</button>
+    </div>`;
+        }
+        return `<div class="q">Verificar fidelidade</div>
+    <div class="qs">${c ? "Cliente no programa: aqui você atribui as condições da fidelidade." : "Cliente sem fidelidade: o fluxo segue direto para finalizar."}</div>
+    ${body}
+    <div class="step-actions">
+      <button class="btn line" data-back>Voltar</button>
+      <button class="btn" data-next>Continuar</button>
+    </div>`;
+      }
+      /* Etapa 4 — Finalizar venda / compra */
+      function stepFinalizar() {
+        const c = A.clienteId ? state.clientes.find((x) => x.id === A.clienteId) : null;
+        const sub = A.cart.reduce((s, it) => s + it.preco * it.qtd, 0);
+        const desc = c && A.resgatar ? VALOR_BRINDE : 0;
+        const total = Math.max(0, sub - desc);
+        const ganho = c ? Math.floor(total) : 0;
+        const term = "venda";
+        const linhas = A.cart
+          .map(
+            (it) =>
+              `<div class="rline"><span>${it.qtd}× ${it.nome}</span><span>${money(it.preco * it.qtd)}</span></div>`,
+          )
+          .join("");
+        return `<div class="q">Finalizar ${term}</div>
+    <div class="qs">Confira e conclua. O estoque baixa e a fidelidade é creditada automaticamente.</div>
+    <div class="card" style="padding:18px">
+      <div style="margin-bottom:12px">
+        <span class="badge-ch loja">🏪 Loja</span>
+        <span class="muted" style="font-size:13px;margin-left:8px">Cliente: <b style="color:var(--ink)">${c ? c.nome : "Avulso"}</b></span>
+      </div>
+      <div class="resumo">
+        ${linhas}
+        <div class="rline"><span class="muted">Subtotal</span><span>${money(sub)}</span></div>
+        ${desc ? `<div class="rline"><span style="color:var(--green)">Brinde (fidelidade)</span><span style="color:var(--green)">−${money(desc)}</span></div>` : ""}
+        <div class="rline tt"><span>Total</span><span>${money(total)}</span></div>
+        ${c ? `<div class="rline"><span class="muted">Pontos a creditar</span><span style="color:var(--accent);font-weight:600">+${ganho} pts</span></div>` : ""}
+      </div>
+    </div>
+    <div class="step-actions">
+      <button class="btn line" data-back>Voltar</button>
+      <button class="btn" id="concluir">Finalizar ${term} · ${money(total)}</button>
+    </div>`;
+      }
+      function stepSucesso() {
+        const r = A.concluido;
+        return `<div class="head"><h2>Atendimento</h2></div>
+    <div class="wiz"><div class="card"><div class="success">
+      <div class="ok">✓</div>
+      <h2>${r.term === "compra" ? "Compra" : "Venda"} finalizada</h2>
+      <p class="muted" style="margin:6px 0 18px">${money(r.total)} · atendimento na loja</p>
+      <div class="card" style="max-width:360px;margin:0 auto;text-align:left;padding:16px">
+        <div class="rline"><span class="muted">Cliente</span><span>${r.cliente}</span></div>
+        ${r.desconto ? `<div class="rline"><span class="muted">Brinde resgatado</span><span style="color:var(--green)">−${money(r.desconto)}</span></div>` : ""}
+        ${r.cliente !== "Avulso" ? `<div class="rline"><span class="muted">Pontos creditados</span><span style="color:var(--accent);font-weight:600">+${r.pontos}</span></div>` : '<div class="rline"><span class="muted">Fidelidade</span><span>—</span></div>'}
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn" id="novoAt">Novo atendimento</button>
+        <button class="btn line" onclick="go('indicadores')">Ver indicadores</button>
+      </div>
+    </div></div></div>`;
+      }
+
+      /* ---------- Ações do atendimento ---------- */
+      function cartTotal() {
+        return A.cart.reduce((s, it) => s + it.preco * it.qtd, 0);
+      }
+      function inic(nome) {
+        return nome
+          .split(" ")
+          .map((x) => x[0])
+          .slice(0, 2)
+          .join("");
+      }
+      function addCartA(id) {
+        const p = state.produtos.find((x) => x.id === id);
+        if (!p || p.estoque <= 0) return;
+        const it = A.cart.find((x) => x.produtoId === id);
+        if ((it ? it.qtd : 0) >= p.estoque) {
+          toast(`Só há ${p.estoque} de ${p.nome}.`);
+          return;
+        }
+        if (it) it.qtd++;
+        else A.cart.push({ produtoId: p.id, nome: p.nome, preco: p.preco, qtd: 1 });
+        render();
+      }
+      function chQtdA(id, d) {
+        const it = A.cart.find((x) => x.produtoId === id);
+        if (!it) return;
+        const p = state.produtos.find((x) => x.id === id);
+        if (d > 0 && it.qtd >= p.estoque) {
+          toast(`Só há ${p.estoque} de ${p.nome}.`);
+          return;
+        }
+        it.qtd += d;
+        if (it.qtd <= 0) A.cart = A.cart.filter((x) => x.produtoId !== id);
+        render();
+      }
+      function concluir() {
+        const c = A.clienteId ? state.clientes.find((x) => x.id === A.clienteId) : null;
+        const desc = c && A.resgatar ? VALOR_BRINDE : 0;
+        const itens = A.cart.map((it) => ({
+          produtoId: it.produtoId,
+          nome: it.nome,
+          preco: it.preco,
+          qtd: it.qtd,
+        }));
+        const { total, pontos } = aplicarPedido(state, A.clienteId, itens, {
+          desconto: desc,
+          pontosGastos: A.resgatar ? PONTOS_BRINDE : 0,
+          canal: A.canal,
+        });
+        persist();
+        A.concluido = {
+          term: "venda",
+          canal: A.canal,
+          total,
+          pontos,
+          desconto: desc,
+          cliente: c ? c.nome : "Avulso",
+        };
+        render();
+        toast("Pedido registrado ☕");
+      }
+
+      /* ================= PAINÉIS DE APOIO ================= */
+      function viewEstoque() {
+        const low = state.produtos.filter((p) => p.estoque <= p.min).length;
+        const rows = state.produtos
+          .slice()
+          .sort((a, b) => (a.estoque <= a.min ? 0 : 1) - (b.estoque <= b.min ? 0 : 1))
+          .map((p) => {
+            const s = p.estoque <= p.min ? "low" : "ok";
+            const lab = p.estoque <= 0 ? "Sem estoque" : p.estoque <= p.min ? "Estoque baixo" : "Ok";
+            return `<tr><td><b>${p.nome}</b></td><td class="muted">${p.cat}</td><td class="r">${money(p.preco)}</td>
+      <td class="r"><b>${p.estoque}</b> <span class="muted" style="font-size:12px">/ mín ${p.min}</span></td>
+      <td><span class="tag ${s}">${s === "ok" ? "●" : "▲"} ${lab}</span></td>
+      <td class="r"><button class="pill-btn" data-repor="${p.id}">+ Repor</button></td></tr>`;
+          })
+          .join("");
+        return `<div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+    <div><h2>Estoque</h2><p>${low > 0 ? `<b style="color:var(--danger)">${low} ${low > 1 ? "itens precisam" : "item precisa"} de reposição.</b>` : "Todos os itens saudáveis."}</p></div>
+    <button class="btn sm" id="novoProd">+ Novo produto</button></div>
+    <div class="card"><div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Produto</th><th>Categoria</th><th class="r">Preço</th><th class="r">Estoque</th><th>Status</th><th></th></tr></thead>
+    <tbody>${rows}</tbody></table></div></div>`;
+      }
+      function viewClientes() {
+        const cls = state.clientes.slice().sort((a, b) => b.visitas - a.visitas || b.pontos - a.pontos);
+        const cards = cls
+          .map((c) => {
+            const prog = Math.min(100, Math.round(((c.pontos % PONTOS_BRINDE) / PONTOS_BRINDE) * 100));
+            const brindes = Math.floor(c.pontos / PONTOS_BRINDE);
+            const faltam = PONTOS_BRINDE - (c.pontos % PONTOS_BRINDE);
+            return `<div class="card cli"><div class="top"><div class="av">${inic(c.nome)}</div>
+      <div><div class="nm2">${c.nome}</div><div class="ph">${c.tel || "—"}</div></div></div>
+      <div class="stats"><div><b>${c.pontos}</b> pontos</div><div><b>${c.visitas}</b> visitas</div><div><b>${money(c.gasto)}</b> gasto</div></div>
+      <div class="bar" style="background:var(--surface-2)"><i style="background:var(--accent);width:${prog}%"></i></div>
+      <div class="rw"><span>${brindes > 0 ? `🎁 ${brindes} brinde${brindes > 1 ? "s" : ""}` : "Progresso até o brinde"}</span><span>faltam ${faltam} pts</span></div></div>`;
+          })
+          .join("");
+        return `<div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+    <div><h2>Fidelidade</h2><p>1 ponto por real · brinde a cada ${PONTOS_BRINDE} pontos. Ordenados pelos mais frequentes.</p></div>
+    <button class="btn sm" id="novoCli2">+ Novo cliente</button></div>
+    <div class="clients">${cards || '<div class="empty">Nenhum cliente.</div>'}</div>`;
+      }
+      function viewIndicadores() {
+        const peds = state.pedidos;
+        const fat = peds.reduce((s, p) => s + p.total, 0);
+        const nped = peds.length;
+        const ticket = nped ? fat / nped : 0;
+        const hoje = new Date().toDateString();
+        const pedsHoje = peds.filter((p) => new Date(p.data).toDateString() === hoje);
+        const fatHoje = pedsHoje.reduce((s, p) => s + p.total, 0);
+        const topProd = state.produtos
+          .slice()
+          .sort((a, b) => b.vendidos - a.vendidos)
+          .slice(0, 5);
+        const maxV = Math.max(1, ...topProd.map((p) => p.vendidos));
+        const rankProd = topProd
+          .map(
+            (p, i) => `<div class="item"><span class="pos">${i + 1}</span>
+    <div class="nm">${p.nome}<div class="bar" style="max-width:220px;background:var(--surface-2)"><i style="background:var(--accent);width:${(p.vendidos / maxV) * 100}%"></i></div></div>
+    <span class="mt">${p.vendidos}</span></div>`,
+          )
+          .join("");
+        const topCli = state.clientes
+          .slice()
+          .filter((c) => c.visitas > 0)
+          .sort((a, b) => b.visitas - a.visitas)
+          .slice(0, 5);
+        const rankCli = topCli.length
+          ? topCli
+              .map(
+                (c, i) =>
+                  `<div class="item"><span class="pos">${i + 1}</span><span class="nm">${c.nome}</span><span class="mt">${c.visitas} <span class="muted" style="font-weight:400;font-size:12px">visitas</span></span></div>`,
+              )
+              .join("")
+          : '<div class="empty">Sem visitas ainda.</div>';
+        return `<div class="head"><h2>Indicadores</h2><p>O que a fidelidade em papel nunca mostrou: quem volta, o que mais sai e qual canal vende mais.</p></div>
+    <div class="kpis">
+      <div class="card kpi"><div class="lab">Faturamento total</div><div class="big">${money(fat)}</div><div class="sub">${nped} pedidos</div></div>
+      <div class="card kpi"><div class="lab">Ticket médio</div><div class="big">${money(ticket)}</div><div class="sub">por pedido</div></div>
+      <div class="card kpi"><div class="lab">Clientes na base</div><div class="big">${state.clientes.length}</div><div class="sub">${topCli.length} ativos</div></div>
+      <div class="card kpi"><div class="lab">Vendas de hoje</div><div class="big">${money(fatHoje)}</div><div class="sub">${pedsHoje.length} ${pedsHoje.length === 1 ? "pedido" : "pedidos"} hoje</div></div>
+    </div>
+    <div class="cols">
+      <div class="card"><div class="card-h"><h3>Mais vendidos</h3><span class="muted" style="font-size:12.5px">por unidade</span></div><div class="rank">${rankProd}</div></div>
+      <div class="card"><div class="card-h"><h3>Clientes mais frequentes</h3></div><div class="rank">${rankCli}</div></div>
+    </div>`;
+      }
+
+      /* ================= WIRING ================= */
+      function wire() {
+        // Atendimento
+        const back = document.querySelector("[data-back]");
+        if (back)
+          back.onclick = () => {
+            A.step = Math.max(0, A.step - 1);
+            render();
+          };
+        const next = document.querySelector("[data-next]");
+        if (next)
+          next.onclick = () => {
+            A.step = Math.min(3, A.step + 1);
+            render();
+          };
+        const cq = $("#cliQ");
+        if (cq)
+          cq.oninput = () => {
+            window._cliQ = cq.value;
+            const p = cq.selectionStart;
+            render();
+            const n = $("#cliQ");
+            if (n) {
+              n.focus();
+              n.setSelectionRange(p, p);
+            }
+          };
+        document.querySelectorAll("[data-cli]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              A.clienteId = b.dataset.cli;
+              A.avulso = false;
+              render();
+            }),
+        );
+        const nc = $("#novoCli");
+        if (nc)
+          nc.onclick = () =>
+            modalCliente((id) => {
+              A.clienteId = id;
+              render();
+            });
+        const av = $("#avulso");
+        if (av)
+          av.onclick = () => {
+            A.clienteId = null;
+            A.avulso = true;
+            A.step = 1;
+            render();
+          };
+        document.querySelectorAll("[data-cat]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              window._catF = b.dataset.cat;
+              render();
+            }),
+        );
+        document.querySelectorAll("[data-add]").forEach((b) => (b.onclick = () => addCartA(b.dataset.add)));
+        document.querySelectorAll("[data-sug]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              addCartA(b.dataset.sug);
+              toast("Item similar adicionado.");
+            }),
+        );
+        document.querySelectorAll("[data-inc]").forEach((b) => (b.onclick = () => chQtdA(b.dataset.inc, 1)));
+        document.querySelectorAll("[data-dec]").forEach((b) => (b.onclick = () => chQtdA(b.dataset.dec, -1)));
+        const lp = $("#limpar");
+        if (lp)
+          lp.onclick = () => {
+            A.cart = [];
+            render();
+          };
+        const rs = $("#resg");
+        if (rs)
+          rs.onclick = () => {
+            A.resgatar = !A.resgatar;
+            render();
+          };
+        const ca = $("#cadAgora");
+        if (ca)
+          ca.onclick = () =>
+            modalCliente((id) => {
+              A.clienteId = id;
+              render();
+            });
+        const cc = $("#concluir");
+        if (cc) cc.onclick = concluir;
+        const na = $("#novoAt");
+        if (na)
+          na.onclick = () => {
+            A = novoAtend();
+            window._cliQ = "";
+            window._catF = "Tudo";
+            render();
+          };
+        // Painéis
+        document.querySelectorAll("[data-repor]").forEach((b) => (b.onclick = () => repor(b.dataset.repor)));
+        const np = $("#novoProd");
+        if (np) np.onclick = modalProduto;
+        const nc2 = $("#novoCli2");
+        if (nc2) nc2.onclick = () => modalCliente();
+      }
+      function repor(id) {
+        const p = state.produtos.find((x) => x.id === id);
+        if (!p) return;
+        const v = prompt(`Repor estoque de ${p.nome}\nQuantas unidades adicionar?`, "20");
+        const n = parseInt(v, 10);
+        if (Number.isFinite(n) && n > 0) {
+          p.estoque += n;
+          persist();
+          render();
+          toast(`+${n} un. de ${p.nome}`);
+        }
+      }
+
+      /* ---------- Modais ---------- */
+      function openModal(html) {
+        $("#modal-root").innerHTML = `<div class="overlay" id="ov"><div class="modal">${html}</div></div>`;
+        $("#ov").onclick = (e) => {
+          if (e.target.id === "ov") closeModal();
+        };
+      }
+      function closeModal() {
+        $("#modal-root").innerHTML = "";
+      }
+      window.closeModal = closeModal;
+      window.go = go;
+      function modalProduto() {
+        openModal(`<div class="card-h"><h3>Novo produto</h3></div><div class="body">
+    <div class="field"><label>Nome</label><input id="f_nome" placeholder="Ex.: Brownie"></div>
+    <div class="grid2"><div class="field"><label>Categoria</label><input id="f_cat" list="cats" placeholder="Ex.: Comidas"><datalist id="cats">${[...new Set(state.produtos.map((p) => p.cat))].map((c) => `<option value="${c}">`).join("")}</datalist></div>
+    <div class="field"><label>Preço (R$)</label><input id="f_preco" type="number" min="0" step="0.5" placeholder="0,00"></div></div>
+    <div class="grid2"><div class="field"><label>Estoque inicial</label><input id="f_est" type="number" min="0" placeholder="0"></div>
+    <div class="field"><label>Estoque mínimo</label><input id="f_min" type="number" min="0" placeholder="10"></div></div></div>
+    <div class="acts"><button class="btn line" onclick="closeModal()">Cancelar</button><button class="btn" id="f_ok">Salvar</button></div>`);
+        $("#f_ok").onclick = () => {
+          const nome = $("#f_nome").value.trim();
+          const preco = parseFloat($("#f_preco").value);
+          if (!nome || !Number.isFinite(preco)) {
+            toast("Preencha nome e preço.");
+            return;
+          }
+          state.produtos.push({
+            id: uid(),
+            nome,
+            cat: $("#f_cat").value.trim() || "Outros",
+            preco,
+            estoque: parseInt($("#f_est").value, 10) || 0,
+            min: parseInt($("#f_min").value, 10) || 10,
+            vendidos: 0,
+          });
+          persist();
+          closeModal();
+          render();
+          toast(`${nome} adicionado.`);
+        };
+      }
+      function modalCliente(cb) {
+        openModal(`<div class="card-h"><h3>Novo cliente</h3></div><div class="body">
+    <div class="field"><label>Nome</label><input id="c_nome" placeholder="Nome do cliente"></div>
+    <div class="field"><label>Telefone (opcional)</label><input id="c_tel" placeholder="(11) 90000-0000"></div></div>
+    <div class="acts"><button class="btn line" onclick="closeModal()">Cancelar</button><button class="btn" id="c_ok">Cadastrar</button></div>`);
+        $("#c_ok").onclick = () => {
+          const nome = $("#c_nome").value.trim();
+          if (!nome) {
+            toast("Informe o nome.");
+            return;
+          }
+          const c = { id: uid(), nome, tel: $("#c_tel").value.trim(), pontos: 0, visitas: 0, gasto: 0 };
+          state.clientes.push(c);
+          persist();
+          closeModal();
+          toast(`${nome} cadastrado 🎯`);
+          if (cb) cb(c.id);
+          else render();
+        };
+      }
+
+      /* ---------- Toast / reset / tema ---------- */
+      let toastT;
+      function toast(msg) {
+        const t = $("#toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastT);
+        toastT = setTimeout(() => t.classList.remove("show"), 2600);
+      }
+      $("#resetBtn").onclick = () => {
+        if (confirm("Apagar tudo e recarregar os dados de exemplo?")) {
+          try {
+            localStorage.removeItem(KEY);
+          } catch (e) {}
+          state = load();
+          A = novoAtend();
+          window._cliQ = "";
+          window._catF = "Tudo";
+          render();
+          toast("Dados recarregados.");
+        }
+      };
+      function currentDark() {
+        const t = document.documentElement.getAttribute("data-theme");
+        if (t) return t === "dark";
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches;
+      }
+      function syncThemeBtn() {
+        const d = currentDark();
+        ["themeIc", "themeIc2"].forEach((id) => {
+          const e = document.getElementById(id);
+          if (e) e.textContent = d ? "☀️" : "🌙";
+        });
+        const l = $("#themeLb");
+        if (l) l.textContent = d ? "Tema claro" : "Tema escuro";
+      }
+      function toggleTheme() {
+        const d = currentDark();
+        document.documentElement.setAttribute("data-theme", d ? "light" : "dark");
+        try {
+          localStorage.setItem(KEY + "_theme", d ? "light" : "dark");
+        } catch (e) {}
+        syncThemeBtn();
+      }
+      $("#themeBtn").onclick = toggleTheme;
+      $("#themeBtn2").onclick = toggleTheme;
+      (function () {
+        try {
+          const t = localStorage.getItem(KEY + "_theme");
+          if (t) document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+        syncThemeBtn();
+      })();
+
+      window._cliQ = "";
+      window._catF = "Tudo";
+      render();
+    </script>
+  </body>
+</html>
